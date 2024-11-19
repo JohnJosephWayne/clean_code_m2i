@@ -3,7 +3,6 @@ package UI;
 import dao.ContactDAO;
 import model.Contact;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import service.ContactService;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class UIConsole {
     private final ContactDAO contactDAO;
     private final Scanner scanner = new Scanner(System.in);
 
-    public UIConsole(ContactService contactService, ContactDAO contactDAO) {
+    public UIConsole(ContactService contactService) {
         this.contactService = contactService;
         this.contactDAO = contactDAO;
     }
