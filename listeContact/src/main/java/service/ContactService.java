@@ -1,53 +1,55 @@
 package service;
 
 import dao.ContactDAO;
-import dao.ContactListDAO;
 import model.Contact;
-import model.ContactList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContactService {
 
-    @Autowired
     private final ContactDAO contactDAO;
+    private final List<Contact> contactList = new ArrayList<>();
 
     @Autowired
-    private final ContactListDAO contactListDAO;
-
-    public ContactService(ContactListDAO contactListDAO, ContactDAO contactDAO) {
-        this.contactListDAO = contactListDAO;
+    public ContactService(ContactDAO contactDAO) {
         this.contactDAO = contactDAO;
     }
-    @Autowired
-    ContactList contactList;
-
-    @Autowired
-    Contact contact;
-
 
     public List<Contact> getAllContacts() {
-        return (List<Contact>) contactList;
+        return new ArrayList<>(contactList);
     }
 
-    public List<Contact> getContactByName(String lastname) {
-        return Contact.id;
+    public Optional<Contact> getContactByName(String lastname) {
+        return contactList.stream()
+                .filter(contact -> contact.getLastName().equalsIgnoreCase(lastname))
+                .findFirst();
     }
 
-    public Contact addContact(String lastName, String firstName) {
-        contactList.(lastName, firstName);
-        return contact;
+    public void addContact(Contact newContact) throws Exception {
+        if (contactList.stream().anyMatch(contact ->
+                contact.getLastName().equalsIgnoreCase(newContact.getLastName())
+                        && contact.getFirstName().equalsIgnoreCase(newContact.getFirstName()))) {
+            throw new Exception("Ce contact existe déjà !");
+        }
+        contactList.add(newContact);
     }
 
-    public Contact deleteContactByName(String lastName, String firstName){
-        contactList.delete(lastName, firstName);
-        return contact;
+    public Optional<Contact> deleteContactByName(String lastname, String firstname) {
+        Optional<Contact> contactOptional = contactList.stream()
+                .filter(contact -> contact.getLastName().equalsIgnoreCase(lastname)
+                        && contact.getFirstName().equalsIgnoreCase(firstname))
+                .findFirst();
+
+        contactOptional.ifPresent(contactList::remove);
+        return contactOptional;
     }
 
     public int getNumberOfContacts() {
-        return contactList.lenght();
+        return contactList.size();
     }
 }

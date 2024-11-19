@@ -1,7 +1,11 @@
 package dao;
 
-import org.springframework.stereotype.Repository;
+import model.Contact;
+import java.util.Optional;
 
-@Repository
 public interface ContactDAO {
+    Optional<Contact> findByName(String lastname, String firstname);
+    Optional<Contact> deleteByName(String lastname, String firstname);
+    Optional<Contact> getByName(String lastname);
+
 }
