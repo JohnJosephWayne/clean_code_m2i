@@ -87,7 +87,7 @@ public class UIConsole {
             System.out.println("Liste des contacts :");
             contactList.forEach(contact -> System.out.println(contact.getLastName() + " " + contact.getFirstName()));
         }
-    }
+    } 
 
     public Optional<Contact> getContactByName(String lastname) {
         return contactDAO.getByName(lastname); // Directement depuis le DAO
