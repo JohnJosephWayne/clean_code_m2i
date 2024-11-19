@@ -14,13 +14,12 @@ import static model.Contact.lastname;
 
 public class UIConsole {
     private final ContactService contactService;
-
-    private final ContactDAO contactDAO;
+    
     private final Scanner scanner = new Scanner(System.in);
+    private ContactDAO contactDAO;
 
     public UIConsole(ContactService contactService) {
         this.contactService = contactService;
-        this.contactDAO = contactDAO;
     }
 
     List<Contact> contactList = new java.util.ArrayList<>(List.of());
